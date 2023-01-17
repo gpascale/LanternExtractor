@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using LanternExtractor.EQ.Pfs;
 using LanternExtractor.EQ.Sound;
 using LanternExtractor.EQ.Wld;
@@ -63,27 +64,31 @@ namespace LanternExtractor.EQ
 
             if (EqFileHelper.IsEquipmentArchive(archiveName))
             {
+                Console.WriteLine("IsEquip");
                 ExtractArchiveEquipment(rootFolder, logger, settings, wldFileInArchive, shortName, s3dArchive);
             }
             else if (EqFileHelper.IsSkyArchive(archiveName))
             {
+                Console.WriteLine("IsSky");
                 ExtractArchiveSky(rootFolder, logger, settings, wldFileInArchive, shortName, s3dArchive);
             }
             else if (EqFileHelper.IsCharactersArchive(archiveName))
             {
+                Console.WriteLine("IsChar");
                 ExtractArchiveCharacters(path, rootFolder, logger, settings, archiveName, wldFileInArchive, shortName, s3dArchive);
             }
             else if (EqFileHelper.IsObjectsArchive(archiveName))
             {
+                Console.WriteLine("IsObj");
                 ExtractArchiveObjects(path, rootFolder, logger, settings, wldFileInArchive, shortName, s3dArchive);
             }
             else
             {
+                Console.WriteLine("IsZone");
                 ExtractArchiveZone(path, rootFolder, logger, settings, shortName, wldFileInArchive, s3dArchive);
             }
 
             MissingTextureFixer.Fix(archiveName);
-
         }
 
         private static void ExtractArchiveZone(string path, string rootFolder, ILogger logger, Settings settings,
@@ -169,6 +174,7 @@ namespace LanternExtractor.EQ
         private static void ExtractArchiveCharacters(string path, string rootFolder, ILogger logger, Settings settings,
             string archiveName, PfsFile wldFileInArchive, string shortName, PfsArchive s3dArchive)
         {
+
             WldFileCharacters wldFileToInject = null;
 
             // global3_chr contains just animations
@@ -253,7 +259,7 @@ namespace LanternExtractor.EQ
             {
                 if (file.Name.EndsWith(".wav"))
                 {
-                    SoundWriter.WriteSoundAsWav(file.Bytes, filePath, file.Name, logger);
+                    //SoundWriter.WriteSoundAsWav(file.Bytes, filePath, file.Name, logger);
                 }
             }
         }
